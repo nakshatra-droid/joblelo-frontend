@@ -23,8 +23,6 @@ export default function LoginPage() {
     try {
       const res = await login({ email, password, role });
       const backendRoles = res.data.user.roles;
-      console.log(role)
-      console.log(backendRoles)
       
       if (!backendRoles.includes(role)) {
         setError(`You are not registered as a ${role}.`);

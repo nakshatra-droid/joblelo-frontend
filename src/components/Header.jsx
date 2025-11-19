@@ -13,7 +13,6 @@ export default function Header() {
   return (
     <header className="w-full flex justify-between items-center px-6 md:px-10 py-4 border-b border-gray-200 bg-white">
       <div className="flex items-center gap-3">
-        {/* <span className="text-yellow-500 text-3xl">👥</span> */}
         <h1 className="text-xl md:text-2xl font-semibold text-gray-900">Joblelo</h1>
       </div>
 
