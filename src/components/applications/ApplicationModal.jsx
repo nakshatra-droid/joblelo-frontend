@@ -38,7 +38,7 @@ export default function ApplicationModal({ app, onClose }) {
                 {/* Resume */}
                 {app.User?.resume_url && (
                     <a
-                        href={`${process.env.REACT_APP_API_URL}${app.User.resume_url}`}
+                        href={`${import.meta.env.VITE_API_URL}${app.User.resume_url}`}
                         target="_blank"
                         rel="noreferrer"
                         className="text-yellow-600 underline font-medium"

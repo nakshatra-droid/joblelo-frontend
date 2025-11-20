@@ -41,7 +41,7 @@ export default function SeekerProfile() {
         {user.resumeUrl && (
           <div>
             <label className="block text-sm text-gray-600 mb-2">Resume</label>
-            <a href={`${process.env.REACT_APP_API_URL}${user.resumeUrl}`} target="_blank" rel="noreferrer" className="underline text-yellow-600">View Resume</a>
+            <a href={`${import.meta.env.VITE_API_URL}${user.resumeUrl}`} target="_blank" rel="noreferrer" className="underline text-yellow-600">View Resume</a>
           </div>
         )}
       </div>

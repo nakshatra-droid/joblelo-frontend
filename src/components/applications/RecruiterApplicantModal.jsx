@@ -41,7 +41,7 @@ export default function RecruiterApplicantModal({ app, onClose, onStatusChange }
 
         {app.User.resume_url ? (
           <a
-            href={`${process.env.REACT_APP_API_URL}${app.User.resume_url}`}
+            href={`${import.meta.env.VITE_API_URL}${app.User.resume_url}`}
             target="_blank"
             className="text-yellow-600 underline font-semibold"
           >
