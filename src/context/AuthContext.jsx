@@ -11,6 +11,7 @@ function normalizeUser(raw) {
   const email = u.email || "";
   const phone = u.phone || "";
   const city = u.city || u.location?.city || "";
+  const state = u.state || u.location?.state || "";
   const country = u.country || u.location?.country || "";
   const experience = u.experience ?? u.years_experience ?? 0;
   const resumeUrl = u.resumeUrl || u.resume_url || u.cv || "";
@@ -26,6 +27,7 @@ function normalizeUser(raw) {
     email,
     phone,
     city,
+    state,
     country,
     experience,
     resumeUrl,
@@ -84,11 +86,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (updated) => {
-    setUser((prev) => {
-      const newUser = { ...(prev || {}), ...(normalizeUser(updated) || {}) };
-      return newUser;
-    });
-  };
+  setUser(prev => {
+    if (!prev) return normalizeUser(updated);
+
+    const normalized = normalizeUser(updated);
+
+    return {
+      ...prev,              // keep all old values
+      ...normalized,        // override updated ones
+      roles: prev.roles,    // DO NOT REMOVE roles
+      role: prev.role       // DO NOT REMOVE main role
+    };
+  });
+};
+
 
   return (
     <AuthContext.Provider

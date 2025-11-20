@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { 
+  validateEmail, 
+  validatePassword, 
+  validateWorkMail 
+} from "../utils/validations";
 
 export default function LoginPage() {
-  const [role, setRole] = useState("");  
+  const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,21 +24,36 @@ export default function LoginPage() {
       setError("Please select a role to login as.");
       return;
     }
-
+    // Validate email
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setError(emailError);
+      return;
+    }
+    // Validate password
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
     try {
       const res = await login({ email, password, role });
       const backendRoles = res.data.user.roles;
-      
+      console.log(role)
+      console.log(backendRoles)
+
       if (!backendRoles.includes(role)) {
         setError(`You are not registered as a ${role}.`);
         return;
       }
-      
+      // if (backendRoles.length > 1) {
+      //   // In future: Show popup here if required
+      // }
       await fetchCurrentUser();
-      
+
       if (role === "seeker") navigate("/seeker/dashboard");
       else navigate("/recruiter/dashboard");
-    
+
     } catch (err) {
       console.error(err);
       const msg = err?.response?.data?.message || "Login failed";
@@ -117,9 +137,9 @@ export default function LoginPage() {
 
       <Link
         to="/register"
-        className="mt-6 inline-block border border-yellow-400 text-yellow-500 py-2 px-6 rounded-lg font-medium hover:bg-yellow-50"
+        className="mt-6 inline-block border border-yellow-400 text-yellow-500 py-2 px-6 rounded-lg font-medium hover:bg-yellow-50 w-full max-w-md text-center"
       >
-        Register Now
+        Register
       </Link>
     </div>
   );
