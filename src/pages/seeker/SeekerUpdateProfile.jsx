@@ -234,7 +234,7 @@ export default function SeekerUpdateProfile() {
           {user?.resumeUrl && (
             <p className="text-xs text-gray-500 mb-2">
               Current resume:{" "}
-              <a href={`http://localhost:5001${user.resumeUrl}`} target="_blank" rel="noreferrer" className="underline text-yellow-600">View Resume</a>
+              <a href={`${process.env.REACT_APP_API_URL}${user.resumeUrl}`} target="_blank" rel="noreferrer" className="underline text-yellow-600">View Resume</a>
             </p>
           )}
           <input type="file" className="w-full bg-gray-200 px-4 py-3 rounded" onChange={(e) => setResumeFile(e.target.files[0])} />
