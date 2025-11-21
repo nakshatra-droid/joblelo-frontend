@@ -2,7 +2,7 @@ export default function HeroSection() {
     return (
         <section className="flex flex-col items-center text-center px-8 py-20">
             <h2 className="text-4xl md:text-5xl font-extrabold text-black tracking-tight">
-                FIND YOUR DREAM JOB TODAY
+                FIND YOUR DREAM JOBS TODAY
             </h2>
             <p className="text-gray-500 text-lg mt-4 max-w-2xl">
                 Connecting Talent with Opportunities Across the Nation for Every Skill Level
