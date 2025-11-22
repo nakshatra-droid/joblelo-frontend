@@ -5,6 +5,18 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.jsx'
 
+import { registerSW } from 'virtual:pwa-register';
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm('New version available. Update now?')) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('App ready for offline use.');
+  }
+});
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
