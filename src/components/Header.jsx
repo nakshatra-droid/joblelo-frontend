@@ -20,8 +20,8 @@ export default function Header() {
       </div>
 
       <nav className="flex items-center gap-6 text-gray-800 font-medium">
-        <Link to="/" className="hidden md:inline hover:text-black transition">HOME</Link>
-        <Link to="/jobs" className="hidden md:inline hover:text-black transition">JOBS</Link>
+        <Link to="/" className="md:inline hover:text-black transition">HOME</Link>
+        <Link to="/jobs" className="md:inline hover:text-black transition">JOBS</Link>
 
         {!user ? (
           <Link to="/login" className="px-4 py-2 bg-yellow-400 rounded-md text-sm md:text-base font-medium hover:brightness-95">
