@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import RecruiterLayout from "../../layouts/RecruiterLayout";
 import api from "../../api/axios";
-import { 
-  validateFullName,  
-  validatePhone, 
-  validatePassword, 
+import {
+  validateFullName,
+  validatePhone,
+  validatePassword,
   validateWorkMail,
+  validateRecruiterCompanyMatch
 } from "../../utils/validations";
 
 export default function RecruiterUpdateProfile() {
-  const { user, updateUser,fetchCurrentUser } = useAuth();
+  const { user, updateUser, fetchCurrentUser } = useAuth();
 
   const [form, setForm] = useState({
     fullName: "",
@@ -49,29 +50,35 @@ export default function RecruiterUpdateProfile() {
     setError("");
     setSuccess("");
     // Validate fullName
-        const fullNameError = validateFullName(form.fullName);
-        if (fullNameError) {
-          setError(fullNameError);
-          return;
-        }
-    
-    
-        // Validate phone
-        const phoneError = validatePhone(form.phone);
-        if (phoneError) {
-          setError(phoneError);
-          return;
-        }
-    
-        
-        // Validate workMail for recruiter
-        
-          const workMailError = validateWorkMail(form.workEmail);
-          if (workMailError) {
-            setError(workMailError);
-            return;
-          }
-        
+    const fullNameError = validateFullName(form.fullName);
+    if (fullNameError) {
+      setError(fullNameError);
+      return;
+    }
+
+
+    // Validate phone
+    const phoneError = validatePhone(form.phone);
+    if (phoneError) {
+      setError(phoneError);
+      return;
+    }
+
+
+    // Validate workMail for recruiter
+
+    const workMailError = validateWorkMail(form.workEmail);
+    if (workMailError) {
+      setError(workMailError);
+      return;
+    }
+    const companyMatchError = validateRecruiterCompanyMatch(form.company, form.workEmail);
+    if (companyMatchError) {
+      setError(companyMatchError);
+      return;
+    }
+
+
 
     try {
       const fd = new FormData();
@@ -100,11 +107,11 @@ export default function RecruiterUpdateProfile() {
     setError("");
     setSuccess("");
     // Validate password
-        const passwordError = validatePassword(passwordForm.newPassword);
-        if (passwordError) {
-          setError(passwordError);
-          return;
-        }
+    const passwordError = validatePassword(passwordForm.newPassword);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
 
     try {
       await api.put("/users/change-password", passwordForm);

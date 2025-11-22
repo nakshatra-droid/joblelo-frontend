@@ -12,7 +12,8 @@ import {
   validateCity,
   validateState,
   validateCountry,
-  validateExperience
+  validateExperience,
+  validateRecruiterCompanyMatch
 } from "../utils/validations";
 
 export default function RegisterPage() {
@@ -41,7 +42,6 @@ export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  // Load companies from backend for recruiter role
   useEffect(() => {
     const fetchCompanies = async () => {
       setLoadingCompanies(true);
@@ -58,7 +58,6 @@ export default function RegisterPage() {
       }
     };
 
-    // Only fetch when user chooses recruiter role the first time
     if (role === "recruiter" && companies.length === 0 && !loadingCompanies) {
       fetchCompanies();
     }
@@ -138,6 +137,12 @@ export default function RegisterPage() {
         setError(workMailError);
         return;
       }
+      const comp = company === "other" ? customCompany : company;
+      const companyMatchError = validateRecruiterCompanyMatch(comp, workMail);
+      if (companyMatchError) {
+        setError(companyMatchError);
+        return;
+      }
     }
     try {
       const fd = new FormData();
@@ -165,7 +170,6 @@ export default function RegisterPage() {
       const res = await register(fd);
       console.log(res);
 
-      // If registration successful, user is logged in, navigate to appropriate dashboard
       const registeredUser = res?.data?.user || res?.user;
       if (registeredUser) {
         if (role === "seeker") {
