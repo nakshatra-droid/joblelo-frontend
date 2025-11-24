@@ -13,12 +13,14 @@ export default function Header() {
   return (
     <header className="w-full flex justify-between items-center px-6 md:px-10 py-4 border-b border-gray-200 bg-white">
       <div className="flex items-center gap-3">
-        <h1 className="text-xl md:text-2xl font-semibold text-gray-900">Joblelo</h1>
+        <Link to={"/"}>
+        <h1 className="text-lg md:text-2xl font-semibold text-gray-900">Joblelo</h1>
+        </Link>
       </div>
 
-      <nav className="flex items-center gap-6 text-gray-800 font-medium">
-        <Link to="/" className="hidden md:inline hover:text-black transition">HOME</Link>
-        <Link to="/jobs" className="hidden md:inline hover:text-black transition">JOBS</Link>
+      <nav className="flex items-center gap-2 md:gap-6 text-gray-800 font-medium">
+        <Link to="/" className="text-xs md:text-base md:inline hover:text-black transition">HOME</Link>
+        <Link to="/jobs" className="text-xs md:text-base md:inline hover:text-black transition">JOBS</Link>
 
         {!user ? (
           <Link to="/login" className="px-4 py-2 bg-yellow-400 rounded-md text-sm md:text-base font-medium hover:brightness-95">
@@ -27,7 +29,7 @@ export default function Header() {
         ) : (
           <>
             <Link to={user.role === "seeker" ? "/seeker/dashboard" : "/recruiter/dashboard"}
-                  className="text-sm md:text-base hover:text-black transition">
+                  className="text-xs md:text-base hover:text-black transition">
               DASHBOARD
             </Link>
             <button
